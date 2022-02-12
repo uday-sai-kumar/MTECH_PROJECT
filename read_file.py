@@ -18,7 +18,7 @@ feature_sets = {
 
 class ReadFile:
     @classmethod
-    def _read_file(cls, path):
+    def read_file(cls, path):
         #print(path)
         feature_vector = {i: 0 for i in range(1, 9)}
         content = open(path).readlines()
