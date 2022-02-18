@@ -5,7 +5,8 @@ from sklearn.ensemble import ExtraTreesClassifier
 import matplotlib.pyplot as plt
 from sklearn.feature_selection import RFE
 from sklearn.svm import SVR
-
+from sklearn.linear_model import LogisticRegression
+from sklearn.feature_selection import SelectFromModel
 
 def select_k_best(_data):
     a=['f'+str(i) for i in range(1,9)]
@@ -39,9 +40,20 @@ def extree_tree_classifier(_data):
 
 def recursive_feature_elimination(_data):
     a = ['f' + str(i) for i in range(1, 9)]
-    estimator = SVR(kernel="linear")
-    selector = RFE(estimator, n_features_to_select=5, step=1)
-    selector = selector.fit(X, y)
+    model = LogisticRegression(solver='lbfgs')
+    #estimator = SVR(kernel="linear")
+    selector = RFE(model, n_features_to_select=5)
+    selector = selector.fit(_data[a], _data['m_or_b'])
+    print(selector.support_)
+    print(selector.ranking_)
+
+
+
+def select_from_model(_data):
+    a = ['f' + str(i) for i in range(1, 9)]
+    selector = SelectFromModel(estimator=LogisticRegression()).fit(_data[a], _data['m_or_b'])
+    print(selector.support_)
+    print(selector.ranking_)
 
 
 
