@@ -8,14 +8,15 @@ from sklearn.svm import SVR
 from sklearn.linear_model import LogisticRegression
 from sklearn.feature_selection import SelectFromModel
 
+
 def select_k_best(_data):
-    a=['f'+str(i) for i in range(1,9)]
+    a = ['f'+str(i) for i in range(1, 9)]
 
     print(a)
 
     print(_data[0:5][a])
     X_new = SelectKBest(chi2, k=5).fit(_data[a], _data['m_or_b'])
-    print(X_new)
+    #print("woowww --- " ,X_new)
 
     dfscores = pd.DataFrame(X_new.scores_)
     dfcolumns = pd.DataFrame(_data.columns)
@@ -24,7 +25,7 @@ def select_k_best(_data):
     featureScores.columns = ['Feature', 'Score']
     print(featureScores)
     print('____________________')
-    print(featureScores.nlargest(5, 'Score'))
+    print(featureScores.nlargest(8, 'Score'))
 
 
 def extree_tree_classifier(_data):
@@ -49,12 +50,14 @@ def recursive_feature_elimination(_data):
 
 
 
+
+
 def select_from_model(_data):
     a = ['f' + str(i) for i in range(1, 9)]
     selector = SelectFromModel(estimator=LogisticRegression()).fit(_data[a], _data['m_or_b'])
-    print(selector.support_)
-    print(selector.ranking_)
-
+    print(selector.estimator_.coef_)
+    print(selector.threshold_)
+    print(selector.get_support())
 
 
 
