@@ -2,17 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="369372fa-1b3b-4072-b26e-9411d1080383" name="Changes" comment="Fourth">
-      <change afterPath="$PROJECT_DIR$/_feature_vectors_1.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/_feature_vectors_2.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/_feature_vectors_3.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/_feature_vectors_4.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/_feature_vectors_5.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/_feature_vectors_6.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/parse_manifest.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/feature_selection.py" beforeDir="false" afterPath="$PROJECT_DIR$/feature_selection.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/malware_main.py" beforeDir="false" afterPath="$PROJECT_DIR$/malware_main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/train_data.py" beforeDir="false" afterPath="$PROJECT_DIR$/train_data.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/parse_manifest.py" beforeDir="false" afterPath="$PROJECT_DIR$/parse_manifest.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,6 +43,27 @@
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RunManager" selected="Python.parse_manifest">
+    <configuration name="dummy" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="CODE" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/dummy.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="dummy_work" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="CODE" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -115,27 +127,6 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="malware_set" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="CODE" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/malware_set.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
     <configuration name="parse_manifest" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="CODE" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -181,10 +172,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Python.parse_manifest" />
+        <item itemvalue="Python.dummy" />
         <item itemvalue="Python.malware_main" />
         <item itemvalue="Python.read_file" />
         <item itemvalue="Python.dummy_work" />
-        <item itemvalue="Python.malware_set" />
       </list>
     </recent_temporary>
   </component>
@@ -232,7 +223,14 @@
       <option name="project" value="LOCAL" />
       <updated>1645717104255</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Fourth">
+      <created>1648118581914</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1648118581915</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
