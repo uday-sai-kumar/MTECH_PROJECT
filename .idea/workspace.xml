@@ -1,7 +1,150 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="369372fa-1b3b-4072-b26e-9411d1080383" name="Changes" comment="Fifth" />
+    <list default="true" id="369372fa-1b3b-4072-b26e-9411d1080383" name="Changes" comment="Fifth">
+      <change afterPath="$PROJECT_DIR$/DataExtraction/Api_Calls.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/DataExtraction/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/DataExtraction/dataflow_analysis.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/androguard/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/androguard/cli/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/androguard/cli/entry_points.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/androguard/cli/main.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/androguard/core/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/androguard/core/analysis/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/androguard/core/analysis/analysis.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/androguard/core/analysis/auto.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/androguard/core/analysis/tags.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/androguard/core/androconf.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/androguard/core/api_specific_resources/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/androguard/core/api_specific_resources/aosp_permissions/permissions_10.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/androguard/core/api_specific_resources/aosp_permissions/permissions_13.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/androguard/core/api_specific_resources/aosp_permissions/permissions_14.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/androguard/core/api_specific_resources/aosp_permissions/permissions_15.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/androguard/core/api_specific_resources/aosp_permissions/permissions_16.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/androguard/core/api_specific_resources/aosp_permissions/permissions_17.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/androguard/core/api_specific_resources/aosp_permissions/permissions_18.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/androguard/core/api_specific_resources/aosp_permissions/permissions_19.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/androguard/core/api_specific_resources/aosp_permissions/permissions_21.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/androguard/core/api_specific_resources/aosp_permissions/permissions_22.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/androguard/core/api_specific_resources/aosp_permissions/permissions_23.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/androguard/core/api_specific_resources/aosp_permissions/permissions_24.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/androguard/core/api_specific_resources/aosp_permissions/permissions_25.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/androguard/core/api_specific_resources/aosp_permissions/permissions_26.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/androguard/core/api_specific_resources/aosp_permissions/permissions_27.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/androguard/core/api_specific_resources/aosp_permissions/permissions_28.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/androguard/core/api_specific_resources/aosp_permissions/permissions_4.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/androguard/core/api_specific_resources/aosp_permissions/permissions_5.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/androguard/core/api_specific_resources/aosp_permissions/permissions_6.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/androguard/core/api_specific_resources/aosp_permissions/permissions_7.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/androguard/core/api_specific_resources/aosp_permissions/permissions_8.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/androguard/core/api_specific_resources/aosp_permissions/permissions_9.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/androguard/core/api_specific_resources/api_permission_mappings/permissions_16.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/androguard/core/api_specific_resources/api_permission_mappings/permissions_17.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/androguard/core/api_specific_resources/api_permission_mappings/permissions_18.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/androguard/core/api_specific_resources/api_permission_mappings/permissions_19.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/androguard/core/api_specific_resources/api_permission_mappings/permissions_21.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/androguard/core/api_specific_resources/api_permission_mappings/permissions_22.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/androguard/core/api_specific_resources/api_permission_mappings/permissions_23.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/androguard/core/api_specific_resources/api_permission_mappings/permissions_24.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/androguard/core/api_specific_resources/api_permission_mappings/permissions_25.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/androguard/core/bytecode.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/androguard/core/bytecodes/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/androguard/core/bytecodes/apk.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/androguard/core/bytecodes/axml/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/androguard/core/bytecodes/axml/types.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/androguard/core/bytecodes/dvm.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/androguard/core/bytecodes/dvm_types.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/androguard/core/bytecodes/mutf8.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/androguard/core/resources/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/androguard/core/resources/public.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/androguard/core/resources/public.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/androguard/decompiler/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/androguard/decompiler/dad/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/androguard/decompiler/dad/ast.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/androguard/decompiler/dad/basic_blocks.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/androguard/decompiler/dad/control_flow.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/androguard/decompiler/dad/dast.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/androguard/decompiler/dad/dataflow.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/androguard/decompiler/dad/decompile.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/androguard/decompiler/dad/graph.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/androguard/decompiler/dad/instruction.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/androguard/decompiler/dad/node.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/androguard/decompiler/dad/opcode_ins.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/androguard/decompiler/dad/util.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/androguard/decompiler/dad/writer.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/androguard/decompiler/decompiler.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/androguard/gui/Banners.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/androguard/gui/BinViewMode.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/androguard/gui/DataModel.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/androguard/gui/DisasmViewMode.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/androguard/gui/HexViewMode.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/androguard/gui/SourceViewMode.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/androguard/gui/TextDecorators.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/androguard/gui/TextSelection.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/androguard/gui/ViewMode.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/androguard/gui/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/androguard/gui/androguard.ico" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/androguard/gui/annotation.ui" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/androguard/gui/apiwindow.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/androguard/gui/binwindow.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/androguard/gui/cemu.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/androguard/gui/fileloading.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/androguard/gui/helpers.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/androguard/gui/mainwindow.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/androguard/gui/methodswindow.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/androguard/gui/renamewindow.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/androguard/gui/resourceswindow.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/androguard/gui/search.ui" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/androguard/gui/sourcewindow.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/androguard/gui/stringswindow.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/androguard/gui/treewindow.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/androguard/gui/xrefwindow.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/androguard/misc.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/androguard/session.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/androguard/util.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/warn/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/warn/analysis/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/warn/analysis/analysis.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/warn/constants/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/warn/constants/api_constants.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/warn/core/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/warn/core/core.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/warn/report/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/warn/report/report.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/warn/report/report_template/css/bootstrap-responsive.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/warn/report/report_template/css/bootstrap.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/warn/report/report_template/ico/favicon.ico" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/warn/report/report_template/img/Androwarn_logo_no_text.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/warn/report/report_template/img/Androwarn_logo_text.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/warn/report/report_template/js/bootstrap-tab.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/warn/report/report_template/js/jquery.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/warn/report/report_template/template.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/warn/search/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/warn/search/api/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/warn/search/api/api.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/warn/search/apk/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/warn/search/apk/apk.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/warn/search/application/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/warn/search/application/application.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/warn/search/malicious_behaviours/Audio_video_interception.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/warn/search/malicious_behaviours/Geolocation_information.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/warn/search/malicious_behaviours/PIM_leakage.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/warn/search/malicious_behaviours/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/warn/search/malicious_behaviours/code_execution.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/warn/search/malicious_behaviours/connection_interfaces.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/warn/search/malicious_behaviours/device_settings.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/warn/search/malicious_behaviours/remote_connection.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/warn/search/malicious_behaviours/telephony_identifiers.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/warn/search/malicious_behaviours/telephony_services.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/warn/search/manifest/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/warn/search/manifest/manifest.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/warn/search/search.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/warn/util/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/warn/util/util.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/CODE.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/CODE.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/parse_manifest.py" beforeDir="false" afterPath="$PROJECT_DIR$/DataExtraction/parse_manifest.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -25,6 +168,17 @@
       <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
     </file-type-list>
   </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/_feature_vectors.csv" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/dummy_work.py" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/malware_main.py" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/feature_selection.py" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/main.py" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/DataExtraction/Api_Calls.py" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/create_data_frame.py" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/DataExtraction/__init__.py" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/train_data.py" root0="FORCE_HIGHLIGHTING" />
+  </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
@@ -37,9 +191,64 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="reference.idesettings.debugger.python" />
   </component>
-  <component name="RunManager" selected="Python.parse_manifest">
+  <component name="PyDebuggerOptionsProvider">
+    <option name="mySaveCallSignatures" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/DataExtraction" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Python.dataflow_analysis">
+    <configuration name="Api_Calls" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="CODE" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/DataExtraction" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/DataExtraction/Api_Calls.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="dataflow_analysis" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="CODE" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/DataExtraction" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/DataExtraction/dataflow_analysis.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="dummy" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="CODE" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -53,27 +262,6 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/dummy.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="dummy_work" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="CODE" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/dummy_work.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -136,28 +324,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/parse_manifest.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="read_file" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="CODE" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="/usr/local/bin/python3.9" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="false" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/read_file.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/DataExtraction/parse_manifest.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -168,11 +335,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.dataflow_analysis" />
+        <item itemvalue="Python.Api_Calls" />
         <item itemvalue="Python.parse_manifest" />
         <item itemvalue="Python.dummy" />
         <item itemvalue="Python.malware_main" />
-        <item itemvalue="Python.read_file" />
-        <item itemvalue="Python.dummy_work" />
       </list>
     </recent_temporary>
   </component>
@@ -227,7 +394,28 @@
       <option name="project" value="LOCAL" />
       <updated>1648118581915</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Fifth">
+      <created>1650433878278</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1650433878278</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Fifth">
+      <created>1650434083826</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1650434083826</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Fifth">
+      <created>1650434109358</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1650434109358</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
