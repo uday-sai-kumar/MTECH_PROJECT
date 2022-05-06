@@ -1,9 +1,3 @@
-from __future__ import division
-from __future__ import print_function
-
-from builtins import chr
-from builtins import range
-from builtins import object
 from androguard.core import bytecode
 
 from androguard.core.resources import public
@@ -101,7 +95,7 @@ def complexToFloat(xcomplex):
     return float(xcomplex & 0xFFFFFF00) * RADIX_MULTS[(xcomplex >> 4) & 3]
 
 
-class StringBlock(object):
+class StringBlock:
     """
     StringBlock is a CHUNK inside an AXML File: `ResStringPool_header`
     It contains all strings, which are used by referecing to ID's
@@ -353,7 +347,7 @@ class StringBlock(object):
                 print("{:08d} {}".format(i, repr(self.getStyle(i))))
 
 
-class AXMLParser(object):
+class AXMLParser:
     """
     AXMLParser reads through all chunks in the AXML file
     and implements a state machine to return information about
@@ -666,7 +660,7 @@ class AXMLParser(object):
         Return the String assosciated with the tag name
         """
         if self.m_name == -1 or (self.m_event != START_TAG and self.m_event != END_TAG):
-            return u''
+            return ''
 
         return self.sb[self.m_name]
 
@@ -689,11 +683,11 @@ class AXMLParser(object):
         Return the Namespace URI (if any) as a String for the current tag
         """
         if self.m_name == -1 or (self.m_event != START_TAG and self.m_event != END_TAG):
-            return u''
+            return ''
 
         # No Namespace
         if self.m_namespaceUri == 0xFFFFFFFF:
-            return u''
+            return ''
 
         return self.sb[self.m_namespaceUri]
 
@@ -729,7 +723,7 @@ class AXMLParser(object):
         Return the String assosicated with the current text
         """
         if self.m_name == -1 or self.m_event != TEXT:
-            return u''
+            return ''
 
         return self.sb[self.m_name]
 
@@ -794,7 +788,7 @@ class AXMLParser(object):
 
         # No Namespace
         if uri == 0xFFFFFFFF:
-            return u''
+            return ''
 
         return self.sb[uri]
 
@@ -850,7 +844,7 @@ class AXMLParser(object):
         if valueType == TYPE_STRING:
             valueString = self.m_attributes[offset + ATTRIBUTE_IX_VALUE_STRING]
             return self.sb[valueString]
-        return u''
+        return ''
 
 
 def format_value(_type, _data, lookup_string=lambda ix: "<string>"):
@@ -876,10 +870,10 @@ def format_value(_type, _data, lookup_string=lambda ix: "<string>"):
         return lookup_string(_data)
 
     elif _type == TYPE_ATTRIBUTE:
-        return "?%s%08X" % (fmt_package(_data), _data)
+        return "?{}{:08X}".format(fmt_package(_data), _data)
 
     elif _type == TYPE_REFERENCE:
-        return "@%s%08X" % (fmt_package(_data), _data)
+        return "@{}{:08X}".format(fmt_package(_data), _data)
 
     elif _type == TYPE_FLOAT:
         return "%f" % unpack("=f", pack("=L", _data))[0]
@@ -893,10 +887,10 @@ def format_value(_type, _data, lookup_string=lambda ix: "<string>"):
         return "true"
 
     elif _type == TYPE_DIMENSION:
-        return "%f%s" % (complexToFloat(_data), DIMENSION_UNITS[_data & COMPLEX_UNIT_MASK])
+        return "{:f}{}".format(complexToFloat(_data), DIMENSION_UNITS[_data & COMPLEX_UNIT_MASK])
 
     elif _type == TYPE_FRACTION:
-        return "%f%s" % (complexToFloat(_data) * 100, FRACTION_UNITS[_data & COMPLEX_UNIT_MASK])
+        return "{:f}{}".format(complexToFloat(_data) * 100, FRACTION_UNITS[_data & COMPLEX_UNIT_MASK])
 
     elif TYPE_FIRST_COLOR_INT <= _type <= TYPE_LAST_COLOR_INT:
         return "#%08X" % _data
@@ -904,7 +898,7 @@ def format_value(_type, _data, lookup_string=lambda ix: "<string>"):
     elif TYPE_FIRST_INT <= _type <= TYPE_LAST_INT:
         return "%d" % fmt_int(_data)
 
-    return "<0x%X, type 0x%02X>" % (_data, _type)
+    return "<0x{:X}, type 0x{:02X}>".format(_data, _type)
 
 
 class AXMLPrinter:
@@ -928,8 +922,8 @@ class AXMLPrinter:
             _type = next(self.axml)
 
             if _type == START_TAG:
-                name = self._fix_name(self.axml.name)
                 uri = self._print_namespace(self.axml.namespace)
+                uri, name = self._fix_name(uri, self.axml.name)
                 tag = "{}{}".format(uri, name)
 
                 comment = self.axml.comment
@@ -944,7 +938,7 @@ class AXMLPrinter:
 
                 for i in range(self.axml.getAttributeCount()):
                     uri = self._print_namespace(self.axml.getAttributeNamespace(i))
-                    name = self._fix_name(self.axml.getAttributeName(i))
+                    uri, name = self._fix_name(uri, self.axml.getAttributeName(i))
                     value = self._fix_value(self._get_attribute_value(i))
 
                     log.debug("found an attribute: {}{}='{}'".format(uri, name, value.encode("utf-8")))
@@ -1028,8 +1022,7 @@ class AXMLPrinter:
 
     def _get_attribute_value(self, index):
         """
-        Wrapper function for format_value
-        to resolve the actual value of an attribute in a tag
+        Wrapper function for format_value to resolve the actual value of an attribute in a tag
         :param index: index of the current attribute
         :return: formatted value
         """
@@ -1038,7 +1031,7 @@ class AXMLPrinter:
 
         return format_value(_type, _data, lambda _: self.axml.getAttributeValue(index))
 
-    def _fix_name(self, name):
+    def _fix_name(self, prefix, name):
         """
         Apply some fixes to element named and attribute names.
         Try to get conform to:
@@ -1046,29 +1039,50 @@ class AXMLPrinter:
         > The rest of the name can contain letters, digits, hyphens, underscores, and periods.
         See: https://msdn.microsoft.com/en-us/library/ms256152(v=vs.110).aspx
 
-        :param name: Name of the attribute
-        :return: a fixed version of the name
+        This function tries to fix some broken namespace mappings.
+        In some cases, the namespace prefix is inside the name and not in the prefix field.
+        Then, the tag name will usually look like 'android:foobar'.
+        If and only if the namespace prefix is inside the namespace mapping and the actual prefix field is empty,
+        we will strip the prefix from the attribute name and return the fixed prefix URI instead.
+        Otherwise replacement rules will be applied.
+
+        The replacement rules work in that way, that all unwanted characters are replaced by underscores.
+        In other words, all characters except the ones listed above are replaced.
+
+        :param name: Name of the attribute or tag
+        :param prefix: The existing prefix uri as found in the AXML chunk
+        :return: a fixed version of prefix and name
+        :rtype: tuple
         """
         if not name[0].isalpha() and name[0] != "_":
-            log.warning("Invalid start for name '{}'".format(name))
+            log.warning("Invalid start for name '{}'. "
+                        "XML name must start with a letter.".format(name))
             self.packerwarning = True
             name = "_{}".format(name)
-        if name.startswith("android:"):
+        if name.startswith("android:") and prefix == '' and 'android' in self.axml.nsmap:
             # Seems be a common thing...
-            # Actually this means that the Manifest is likely to be broken, as
-            # usually no namespace URI is set in this case.
-            log.warning("Name '{}' starts with 'android:' prefix! The Manifest seems to be broken? Removing prefix.".format(name))
-            self.packerwarning = True
+            log.info("Name '{}' starts with 'android:' prefix but 'android' is a known prefix. Replacing prefix.".format(name))
+            prefix = self._print_namespace(self.axml.nsmap['android'])
             name = name[len("android:"):]
-        if ":" in name:
-            # Print out an extra warning
-            log.warning("Name seems to contain a namespace prefix: '{}'".format(name))
+            # It looks like this is some kind of packer... Not sure though.
+            self.packerwarning = True
+        elif ":" in name and prefix == '':
+            self.packerwarning = True
+            embedded_prefix, new_name = name.split(":", 1)
+            if embedded_prefix in self.axml.nsmap:
+                log.info("Prefix '{}' is in namespace mapping, assume that it is a prefix.")
+                prefix = self._print_namespace(self.axml.nsmap[embedded_prefix])
+                name = new_name
+            else:
+                # Print out an extra warning
+                log.warning("Confused: name contains a unknown namespace prefix: '{}'. "
+                            "This is either a broken AXML file or some attempt to break stuff.".format(name))
         if not re.match(r"^[a-zA-Z0-9._-]*$", name):
             log.warning("Name '{}' contains invalid characters!".format(name))
             self.packerwarning = True
             name = re.sub(r"[^a-zA-Z0-9._-]", "_", name)
 
-        return name
+        return prefix, name
 
     def _fix_value(self, value):
         """
@@ -1082,14 +1096,8 @@ class AXMLPrinter:
         :return: the cleaned value
         """
         if not self.__charrange or not self.__replacement:
-            if sys.maxunicode == 0xFFFF:
-                # Fix for python 2.x, surrogate pairs does not match in regex
-                self.__charrange = re.compile(u'^([\u0020-\uD7FF\u0009\u000A\u000D\uE000-\uFFFD]|[\uD800-\uDBFF][\uDC00-\uDFFF])*$')
-                # TODO: this regex is slightly wrong... surrogates are not matched as pairs.
-                self.__replacement = re.compile(u'[^\u0020-\uDBFF\u0009\u000A\u000D\uE000-\uFFFD\uDC00-\uDFFF]')
-            else:
-                self.__charrange = re.compile(u'^[\u0020-\uD7FF\u0009\u000A\u000D\uE000-\uFFFD\U00010000-\U0010FFFF]*$')
-                self.__replacement = re.compile(u'[^\u0020-\uD7FF\u0009\u000A\u000D\uE000-\uFFFD\U00010000-\U0010FFFF]')
+            self.__charrange = re.compile('^[\u0020-\uD7FF\u0009\u000A\u000D\uE000-\uFFFD\U00010000-\U0010FFFF]*$')
+            self.__replacement = re.compile('[^\u0020-\uD7FF\u0009\u000A\u000D\uE000-\uFFFD\U00010000-\U0010FFFF]')
 
         # Reading string until \x00. This is the same as aapt does.
         if "\x00" in value:
@@ -1182,7 +1190,7 @@ TOUCHSCREEN_STYLUS = ACONFIGURATION_TOUCHSCREEN_STYLUS
 TOUCHSCREEN_FINGER = ACONFIGURATION_TOUCHSCREEN_FINGER
 
 
-class ARSCParser(object):
+class ARSCParser:
     """
     Parser for resource.arsc files
 
@@ -1452,7 +1460,7 @@ class ARSCParser(object):
         entry_data = ate.key.get_data()
         return [
             ate.get_value(),
-            "#%02x%02x%02x%02x" % (
+            "#{:02x}{:02x}{:02x}{:02x}".format(
                 ((entry_data >> 24) & 0xFF),
                 ((entry_data >> 16) & 0xFF),
                 ((entry_data >> 8) & 0xFF),
@@ -1462,12 +1470,12 @@ class ARSCParser(object):
     def get_resource_dimen(self, ate):
         try:
             return [
-                ate.get_value(), "%s%s" % (
+                ate.get_value(), "{}{}".format(
                     complexToFloat(ate.key.get_data()),
                     DIMENSION_UNITS[ate.key.get_data() & COMPLEX_UNIT_MASK])
             ]
         except IndexError:
-            log.debug("Out of range dimension unit index for %s: %s" % (
+            log.debug("Out of range dimension unit index for {}: {}".format(
                 complexToFloat(ate.key.get_data()),
                 ate.key.get_data() & COMPLEX_UNIT_MASK))
             return [ate.get_value(), ate.key.get_data()]
@@ -1520,7 +1528,7 @@ class ARSCParser(object):
 
         try:
             for i in self.values[package_name][locale]["public"]:
-                buff += '<public type="%s" name="%s" id="0x%08x" />\n' % (
+                buff += '<public type="{}" name="{}" id="0x{:08x}" />\n'.format(
                     i[0], i[1], i[2])
         except KeyError:
             pass
@@ -1550,7 +1558,7 @@ class ARSCParser(object):
                     value = '<![CDATA[%s]]>' % i[1]
                 else:
                     value = i[1]
-                buff += '<string name="%s">%s</string>\n' % (i[0], value)
+                buff += '<string name="{}">{}</string>\n'.format(i[0], value)
         except KeyError:
             pass
 
@@ -1578,7 +1586,7 @@ class ARSCParser(object):
                 buff += '<resources>\n'
                 try:
                     for i in self.values[package_name][locale]["string"]:
-                        buff += '<string name="%s">%s</string>\n' % (i[0], escape(i[1]))
+                        buff += '<string name="{}">{}</string>\n'.format(i[0], escape(i[1]))
                 except KeyError:
                     pass
 
@@ -1611,7 +1619,7 @@ class ARSCParser(object):
                 if len(i) == 1:
                     buff += '<item type="id" name="%s"/>\n' % (i[0])
                 else:
-                    buff += '<item type="id" name="%s">%s</item>\n' % (i[0],
+                    buff += '<item type="id" name="{}">{}</item>\n'.format(i[0],
                                                                        escape(i[1]))
         except KeyError:
             pass
@@ -1637,7 +1645,7 @@ class ARSCParser(object):
 
         try:
             for i in self.values[package_name][locale]["bool"]:
-                buff += '<bool name="%s">%s</bool>\n' % (i[0], i[1])
+                buff += '<bool name="{}">{}</bool>\n'.format(i[0], i[1])
         except KeyError:
             pass
 
@@ -1662,7 +1670,7 @@ class ARSCParser(object):
 
         try:
             for i in self.values[package_name][locale]["integer"]:
-                buff += '<integer name="%s">%s</integer>\n' % (i[0], i[1])
+                buff += '<integer name="{}">{}</integer>\n'.format(i[0], i[1])
         except KeyError:
             pass
 
@@ -1687,7 +1695,7 @@ class ARSCParser(object):
 
         try:
             for i in self.values[package_name][locale]["color"]:
-                buff += '<color name="%s">%s</color>\n' % (i[0], i[1])
+                buff += '<color name="{}">{}</color>\n'.format(i[0], i[1])
         except KeyError:
             pass
 
@@ -1712,7 +1720,7 @@ class ARSCParser(object):
 
         try:
             for i in self.values[package_name][locale]["dimen"]:
-                buff += '<dimen name="%s">%s</dimen>\n' % (i[0], i[1])
+                buff += '<dimen name="{}">{}</dimen>\n'.format(i[0], i[1])
         except KeyError:
             pass
 
@@ -1740,7 +1748,7 @@ class ARSCParser(object):
             pass
         return None, None, None
 
-    class ResourceResolver(object):
+    class ResourceResolver:
         """
         Resolves resources by ID and configuration.
         This resolver deals with complex resources as well as with references.
@@ -2012,7 +2020,7 @@ class ARSCParser(object):
                 return "@{}:{}/{}".format(package, resource, name)
 
 
-class PackageContext(object):
+class PackageContext:
     def __init__(self, current_package, stringpool_main, mTableStrings, mKeyStrings):
         """
         :param ARSCResTablePackage current_package:
@@ -2041,7 +2049,7 @@ class PackageContext(object):
                                                         self.mKeyStrings)
 
 
-class ARSCHeader(object):
+class ARSCHeader:
     """
     Object which contains a Resource Chunk.
     This is an implementation of the `ResChunk_header`.
@@ -2132,7 +2140,7 @@ class ARSCHeader(object):
                                                                                          self.size)
 
 
-class ARSCResTablePackage(object):
+class ARSCResTablePackage:
     """
     A `ResTable_package`
 
@@ -2157,7 +2165,7 @@ class ARSCResTablePackage(object):
         return name
 
 
-class ARSCResTypeSpec(object):
+class ARSCResTypeSpec:
     """
     See http://androidxref.com/9.0.0_r3/xref/frameworks/base/libs/androidfw/include/androidfw/ResourceTypes.h#1327
     """
@@ -2178,7 +2186,7 @@ class ARSCResTypeSpec(object):
             self.typespec_entries.append(unpack('<I', buff.read(4))[0])
 
 
-class ARSCResType(object):
+class ARSCResType:
     """
     This is a `ResTable_type` without it's `ResChunk_header`.
     It contains a `ResTable_config`
@@ -2223,7 +2231,7 @@ class ARSCResType(object):
         )
 
 
-class ARSCResTableConfig(object):
+class ARSCResTableConfig:
     """
     ARSCResTableConfig contains the configuration for specific resource selection.
     This is used on the device to determine which resources should be loaded
@@ -2548,7 +2556,7 @@ class ARSCResTableConfig(object):
         return "<ARSCResTableConfig '{}'={}>".format(self.get_qualifier(), repr(self._get_tuple()))
 
 
-class ARSCResTableEntry(object):
+class ARSCResTableEntry:
     """
     A `ResTable_entry`.
 
@@ -2614,7 +2622,7 @@ class ARSCResTableEntry(object):
             self.item if self.is_complex() else self.key)
 
 
-class ARSCComplex(object):
+class ARSCComplex:
     """
     This is actually a `ResTable_map_entry`
 
@@ -2642,7 +2650,7 @@ class ARSCComplex(object):
         return "<ARSCComplex idx='0x{:08x}' parent='{}' count='{}'>".format(self.start, self.id_parent, self.count)
 
 
-class ARSCResStringPoolRef(object):
+class ARSCResStringPoolRef:
     """
     This is actually a `Res_value`
     It holds information about the stored resource value

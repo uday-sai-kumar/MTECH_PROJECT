@@ -1,34 +1,14 @@
-from __future__ import print_function
-
-from builtins import str
-from builtins import range
-from builtins import object
 import hashlib
 from xml.sax.saxutils import escape
-from struct import unpack, pack
+from struct import pack
 import textwrap
-
 import json
-from androguard.core.androconf import CONF, enable_colors, remove_colors, save_colors, color_range
 import logging
 
+from androguard.core.androconf import CONF, color_range
+from androguard.core.bytecodes.dvm_types import Kind, Operand
+
 log = logging.getLogger("androguard.bytecode")
-
-
-def disable_print_colors():
-    colors = save_colors()
-    remove_colors()
-    return colors
-
-
-def enable_print_colors(colors):
-    enable_colors(colors)
-
-
-# Handle exit message
-def Exit(msg):
-    log.warning("Error : " + msg)
-    raise Exception("oops")
 
 
 def _PrintBanner():
@@ -48,11 +28,11 @@ def _PrintNote(note, tab=0):
     print_fct = CONF["PRINT_FCT"]
     note_color = CONF["COLORS"]["NOTE"]
     normal_color = CONF["COLORS"]["NORMAL"]
-    print_fct("\t" * tab + "%s# %s%s" % (note_color, note, normal_color) + "\n")
+    print_fct("\t" * tab + "{}# {}{}".format(note_color, note, normal_color) + "\n")
 
 
-# Print arg into a correct format
 def _Print(name, arg):
+    """Print arg into a correct format"""
     buff = name + " "
 
     if type(arg).__name__ == 'int':
@@ -61,10 +41,6 @@ def _Print(name, arg):
         buff += "0x%x" % arg
     elif type(arg).__name__ == 'str':
         buff += "%s" % arg
-    elif isinstance(arg, SV):
-        buff += "0x%x" % arg.get_value()
-    elif isinstance(arg, SVs):
-        buff += arg.get_value().__str__()
 
     print(buff)
 
@@ -100,9 +76,40 @@ def _PrintDefault(msg):
     print_fct(msg)
 
 
-def PrettyShow(m_a, basic_blocks, notes={}):
+def _colorize_operands(operands, colors):
+    """
+    Return strings with color coded operands
+    """
+    for operand in operands:
+        if operand[0] == Operand.REGISTER:
+            yield "{}v{}{}".format(colors["registers"], operand[1], colors["normal"])
+
+        elif operand[0] == Operand.LITERAL:
+            yield "{}{}{}".format(colors["literal"], operand[1], colors["normal"])
+
+        elif operand[0] == Operand.RAW:
+            yield "{}{}{}".format(colors["raw"], operand[1], colors["normal"])
+
+        elif operand[0] == Operand.OFFSET:
+            yield "%s%d%s" % (colors["offset"], operand[1], colors["normal"])
+
+        elif operand[0] & Operand.KIND:
+            if operand[0] == (Operand.KIND + Kind.STRING):
+                yield "{}{}{}".format(colors["string"], operand[2], colors["normal"])
+            elif operand[0] == (Operand.KIND + Kind.METH):
+                yield "{}{}{}".format(colors["meth"], operand[2], colors["normal"])
+            elif operand[0] == (Operand.KIND + Kind.FIELD):
+                yield "{}{}{}".format(colors["field"], operand[2], colors["normal"])
+            elif operand[0] == (Operand.KIND + Kind.TYPE):
+                yield "{}{}{}".format(colors["type"], operand[2], colors["normal"])
+            else:
+                yield "{}".format(repr(operands[2]))
+        else:
+            yield "{}".format(repr(operands[1]))
+
+
+def PrettyShow(basic_blocks, notes={}):
     idx = 0
-    nb = 0
 
     offset_color = CONF["COLORS"]["OFFSET"]
     offset_addr_color = CONF["COLORS"]["OFFSET_ADDR"]
@@ -117,8 +124,8 @@ def PrettyShow(m_a, basic_blocks, notes={}):
 
     colors = CONF["COLORS"]["OUTPUT"]
 
-    for i in basic_blocks:
-        print_fct("%s%s%s : \n" % (bb_color, i.get_name(), normal_color))
+    for nb, i in enumerate(basic_blocks):
+        print_fct("{}{}{} : \n".format(bb_color, i.get_name(), normal_color))
         instructions = list(i.get_instructions())
         for ins in instructions:
             if nb in notes:
@@ -134,7 +141,7 @@ def PrettyShow(m_a, basic_blocks, notes={}):
             operands = ins.get_operands()
             print_fct(
                 "%s" %
-                ", ".join(m_a.get_vm().colorize_operands(operands, colors)))
+                ", ".join(_colorize_operands(operands, colors)))
 
             op_value = ins.get_op_value()
             if ins == instructions[-1] and i.childs:
@@ -152,9 +159,9 @@ def PrettyShow(m_a, basic_blocks, notes={}):
                               normal_color)
                 else:
                     if len(i.childs) == 2:
-                        print_fct("%s[ %s%s " % (branch_false_color,
-                                                 i.childs[0][2].get_name(),
-                                                 branch_true_color))
+                        print_fct("{}[ {}{} ".format(branch_false_color,
+                                                     i.childs[0][2].get_name(),
+                                                     branch_true_color))
                         print_fct(' '.join("%s" % c[2].get_name(
                         ) for c in i.childs[1:]) + " ]%s" % normal_color)
                     else:
@@ -163,7 +170,6 @@ def PrettyShow(m_a, basic_blocks, notes={}):
                                   normal_color)
 
             idx += ins.get_length()
-            nb += 1
 
             print_fct("\n")
 
@@ -175,15 +181,63 @@ def PrettyShow(m_a, basic_blocks, notes={}):
         print_fct("\n")
 
 
+def _get_operand_html(operand, registers_colors, colors):
+    """
+    Return a HTML representation of the operand.
+    The HTML should be compatible with pydot/graphviz to be used
+    inside a node label.
+
+    This is solely used in :func:`~androguard.core.bytecodes.method2dot`
+
+    :param operand: tuple containing the operand type and operands
+    :param dict register_colors: key: register number, value: register color
+    :param dict colors: dictionary containing the register colors
+    :returns: HTML code of the operands
+    """
+    if operand[0] == Operand.REGISTER:
+        return '<FONT color="{}">v{}</FONT>'.format(registers_colors[operand[1]], operand[1])
+
+    if operand[0] == Operand.LITERAL:
+        return '<FONT color="{}">0x{:x}</FONT>'.format(colors["literal"], operand[1])
+
+    if operand[0] == Operand.RAW:
+        wrapped_adjust = '<br />'.join(escape(repr(i)[1:-1]) for i in textwrap.wrap(operand[1], 64))
+        return '<FONT color="{}">{}</FONT>'.format(colors["raw"], wrapped_adjust)
+
+    if operand[0] == Operand.OFFSET:
+        return '<FONT FACE="Times-Italic" color="{}">@0x{:x}</FONT>'.format(colors["offset"], operand[1])
+
+    if operand[0] & Operand.KIND:
+        if operand[0] == (Operand.KIND + Kind.STRING):
+            wrapped_adjust = "&quot; &#92;<br />&quot;".join(map(escape, textwrap.wrap(operand[2], 64)))
+            return '<FONT color="{}">&quot;{}&quot;</FONT>'.format(colors["string"], wrapped_adjust)
+
+        if operand[0] == (Operand.KIND + Kind.METH):
+            return '<FONT color="{}">{}</FONT>'.format(colors["method"], escape(operand[2]))
+        if operand[0] == (Operand.KIND + Kind.FIELD):
+            return '<FONT color="{}">{}</FONT>'.format(colors["field"], escape(operand[2]))
+        if operand[0] == (Operand.KIND + Kind.TYPE):
+            return '<FONT color="{}">{}</FONT>'.format(colors["type"], escape(operand[2]))
+
+        return escape(str(operand[2]))
+
+    return escape(str(operand[1]))
+
+
 def method2dot(mx, colors=None):
     """
-    Export analysis method to dot format
+    Export analysis method to dot format.
+
+    A control flow graph is created by using the concept of BasicBlocks.
+    Each BasicBlock is a sequence of opcode without any jumps or branch.
 
     :param mx: :class:`~androguard.core.analysis.analysis.MethodAnalysis`
     :param colors: dict of colors to use, if colors is None the default colors are used
 
     :returns: a string which contains the dot graph
     """
+
+    font_face = "monospace"
 
     if not colors:
         colors = {
@@ -207,63 +261,59 @@ def method2dot(mx, colors=None):
             "registers_range": ("#999933", "#6666FF")
         }
 
-    node_tpl = "\nstruct_%s [label=<\n<TABLE BORDER=\"0\" CELLBORDER=\"0\" CELLSPACING=\"3\">\n%s</TABLE>>];\n"
-    label_tpl = "<TR><TD ALIGN=\"LEFT\" BGCOLOR=\"%s\"> <FONT FACE=\"Times-Bold\" color=\"%s\">%x</FONT> </TD><TD ALIGN=\"LEFT\" BGCOLOR=\"%s\"> <FONT FACE=\"Times-Bold\" color=\"%s\">%s </FONT> %s </TD></TR>\n"
-    link_tpl = "<TR><TD PORT=\"%s\"></TD></TR>\n"
+    node_tpl = """
+    struct_%s [label=<
+        <TABLE BORDER="0" CELLBORDER="0" CELLSPACING="3">
+            %s
+        </TABLE>
+    >];
+    """
+    label_tpl = """
+    <TR>
+        <TD ALIGN="LEFT" BGCOLOR="%s">
+            <FONT FACE="{font_face}" color="%s">%04x</FONT>
+        </TD>
+        <TD ALIGN="LEFT" BGCOLOR="%s">
+            <FONT FACE="{font_face}" color="%s">%s</FONT> %s
+        </TD>
+    </TR>
+    """.format(font_face=font_face)
+
+    link_tpl = '<TR><TD PORT="{}"></TD></TR>\n'
 
     edges_html = ""
     blocks_html = ""
 
     method = mx.get_method()
-    sha256 = hashlib.sha256(bytearray("%s%s%s" % (
-        mx.get_method().get_class_name(), mx.get_method().get_name(),
-        mx.get_method().get_descriptor()), "UTF-8")).hexdigest()
 
-    registers = {}
-    if method.get_code():
-        for DVMBasicMethodBlock in mx.basic_blocks.gets():
-            for DVMBasicMethodBlockInstruction in DVMBasicMethodBlock.get_instructions():
-                operands = DVMBasicMethodBlockInstruction.get_operands(0)
-                for register in operands:
-                    if register[0] == 0:
-                        if register[1] not in registers:
-                            registers[register[1]] = 0
-                        registers[register[1]] += 1
-#        for i in range(method.get_code().get_registers_size()):
-#            registers[i] = 0
+    # This is used as a seed to create unique hashes for the nodes
+    sha256 = hashlib.sha256(
+        mx.get_method().get_class_name() + mx.get_method().get_name() + mx.get_method().get_descriptor()).digest()
 
-    if registers:
-        registers_colors = color_range(colors["registers_range"][0],
-                                       colors["registers_range"][1],
-                                       len(registers))
-        for i in registers:
-            registers[i] = registers_colors.pop(0)
+    # Collect all used Registers and create colors
+    if method.get_code() and method.get_code().get_registers_size() != 0:
+        registers = {i: c for i, c in enumerate(color_range(colors["registers_range"][0], colors["registers_range"][1],
+                                                            method.get_code().get_registers_size()))}
+    else:
+        registers = dict()
 
     new_links = []
 
-    for DVMBasicMethodBlock in mx.basic_blocks.gets():
-        ins_idx = DVMBasicMethodBlock.start
-        block_id = hashlib.md5(bytearray(sha256 + DVMBasicMethodBlock.get_name(), "UTF-8")).hexdigest()
+    # Go through all basic blocks and create the CFG
+    for basic_block in mx.basic_blocks:
+        ins_idx = basic_block.start
+        block_id = hashlib.md5(sha256 + basic_block.get_name()).hexdigest()
 
-        content = link_tpl % 'header'
+        content = link_tpl.format('header')
 
-        for DVMBasicMethodBlockInstruction in DVMBasicMethodBlock.get_instructions():
-            if DVMBasicMethodBlockInstruction.get_op_value(
-            ) == 0x2b or DVMBasicMethodBlockInstruction.get_op_value() == 0x2c:
-                new_links.append((DVMBasicMethodBlock, ins_idx,
-                                  DVMBasicMethodBlockInstruction.get_ref_off() * 2 + ins_idx))
-            elif DVMBasicMethodBlockInstruction.get_op_value() == 0x26:
-                new_links.append((DVMBasicMethodBlock, ins_idx,
-                                  DVMBasicMethodBlockInstruction.get_ref_off() * 2 + ins_idx))
+        for instruction in basic_block.get_instructions():
+            if instruction.get_op_value() in (0x2b, 0x2c):
+                new_links.append((basic_block, ins_idx, instruction.get_ref_off() * 2 + ins_idx))
+            elif instruction.get_op_value() == 0x26:
+                new_links.append((basic_block, ins_idx, instruction.get_ref_off() * 2 + ins_idx))
 
-            operands = DVMBasicMethodBlockInstruction.get_operands(ins_idx)
-            output = ", ".join(mx.get_vm().get_operand_html(
-                i, registers, colors, escape, textwrap.wrap) for i in operands)
-
-            formatted_operands = DVMBasicMethodBlockInstruction.get_formatted_operands(
-            )
-            if formatted_operands:
-                output += " ; %s" % str(formatted_operands)
+            operands = instruction.get_operands(ins_idx)
+            output = ", ".join(_get_operand_html(i, registers, colors) for i in operands)
 
             bg_idx = colors["bg_idx"]
             if ins_idx == 0 and "bg_start_idx" in colors:
@@ -272,80 +322,73 @@ def method2dot(mx, colors=None):
             content += label_tpl % (
                 bg_idx, colors["idx"], ins_idx, colors["bg_instruction"],
                 colors["instruction_name"],
-                DVMBasicMethodBlockInstruction.get_name(), output)
+                instruction.get_name(), output)
 
-            ins_idx += DVMBasicMethodBlockInstruction.get_length()
-            last_instru = DVMBasicMethodBlockInstruction
+            ins_idx += instruction.get_length()
 
         # all blocks from one method parsed
         # updating dot HTML content
-        content += link_tpl % 'tail'
+        content += link_tpl.format('tail')
         blocks_html += node_tpl % (block_id, content)
 
         # Block edges color treatment (conditional branchs colors)
         val = colors["true_branch"]
-        if len(DVMBasicMethodBlock.childs) > 1:
+        if len(basic_block.childs) > 1:
             val = colors["false_branch"]
-        elif len(DVMBasicMethodBlock.childs) == 1:
+        elif len(basic_block.childs) == 1:
             val = colors["jump_branch"]
 
         values = None
-        if (last_instru.get_op_value() == 0x2b or
-                last_instru.get_op_value() == 0x2c
-           ) and len(DVMBasicMethodBlock.childs) > 1:
+        # The last instruction is important and still set from the loop
+        # FIXME: what if there is no instruction in the basic block?
+        if instruction.get_op_value() in (0x2b, 0x2c) and len(basic_block.childs) > 1:
             val = colors["default_branch"]
             values = ["default"]
-            values.extend(DVMBasicMethodBlock.get_special_ins(
-                ins_idx - last_instru.get_length()).get_values())
+            values.extend(basic_block.get_special_ins(ins_idx - instruction.get_length()).get_values())
 
         # updating dot edges
-        for DVMBasicMethodBlockChild in DVMBasicMethodBlock.childs:
+        for DVMBasicMethodBlockChild in basic_block.childs:
             label_edge = ""
 
             if values:
                 label_edge = values.pop(0)
 
-            child_id = hashlib.md5(
-                bytearray(sha256 + DVMBasicMethodBlockChild[-1].get_name(), "UTF-8")).hexdigest()
-            edges_html += "struct_%s:tail -> struct_%s:header  [color=\"%s\", label=\"%s\"];\n" % (
-                block_id, child_id, val, label_edge)
+            child_id = hashlib.md5(sha256 + DVMBasicMethodBlockChild[-1].get_name()).hexdigest()
+            edges_html += "struct_{}:tail -> struct_{}:header  [color=\"{}\", label=\"{}\"];\n".format(block_id,
+                                                                                                       child_id, val,
+                                                                                                       label_edge)
+
             # color switch
             if val == colors["false_branch"]:
                 val = colors["true_branch"]
             elif val == colors["default_branch"]:
                 val = colors["true_branch"]
 
-        exception_analysis = DVMBasicMethodBlock.get_exception_analysis()
+        exception_analysis = basic_block.get_exception_analysis()
         if exception_analysis:
             for exception_elem in exception_analysis.exceptions:
                 exception_block = exception_elem[-1]
                 if exception_block:
-                    exception_id = hashlib.md5(
-                        bytearray(sha256 + exception_block.get_name(), "UTF-8")).hexdigest()
-                    edges_html += "struct_%s:tail -> struct_%s:header  [color=\"%s\", label=\"%s\"];\n" % (
+                    exception_id = hashlib.md5(sha256 + exception_block.get_name()).hexdigest()
+                    edges_html += "struct_{}:tail -> struct_{}:header  [color=\"{}\", label=\"{}\"];\n".format(
                         block_id, exception_id, "black", exception_elem[0])
 
     for link in new_links:
-        DVMBasicMethodBlock = link[0]
+        basic_block = link[0]
         DVMBasicMethodBlockChild = mx.basic_blocks.get_basic_block(link[2])
 
         if DVMBasicMethodBlockChild:
-            block_id = hashlib.md5(bytearray(sha256 + DVMBasicMethodBlock.get_name(
-            ), "UTF-8")).hexdigest()
-            child_id = hashlib.md5(bytearray(sha256 + DVMBasicMethodBlockChild.get_name(
-            ), "UTF-8")).hexdigest()
+            block_id = hashlib.md5(sha256 + basic_block.get_name()).hexdigest()
+            child_id = hashlib.md5(sha256 + DVMBasicMethodBlockChild.get_name()).hexdigest()
 
-            edges_html += "struct_%s:tail -> struct_%s:header  [color=\"%s\", label=\"data(0x%x) to @0x%x\", style=\"dashed\"];\n" % (
+            edges_html += "struct_{}:tail -> struct_{}:header  [color=\"{}\", label=\"data(0x{:x}) to @0x{:x}\", style=\"dashed\"];\n".format(
                 block_id, child_id, "yellow", link[1], link[2])
 
-    method_label = method.get_class_name() + "." + method.get_name(
-    ) + "->" + method.get_descriptor()
+    method_label = method.get_class_name() + "." + method.get_name() + "->" + method.get_descriptor()
 
     method_information = method.get_information()
     if method_information:
-        method_label += "\\nLocal registers v%d ... v%d" % (
-            method_information["registers"][0],
-            method_information["registers"][1])
+        method_label += "\\nLocal registers v{} ... v{}".format(*method_information["registers"])
         if "params" in method_information:
             for register, rtype in method_information["params"]:
                 method_label += "\\nparam v%d = %s" % (register, rtype)
@@ -356,40 +399,77 @@ def method2dot(mx, colors=None):
 
 def method2format(output, _format="png", mx=None, raw=None):
     """
-    Export method to a specific file format
+    Export method structure as a graph to a specific file format using dot from the graphviz package.
+    The result is written to the file specified via :code:`output`.
 
-    @param output : output filename
-    @param _format : format type (png, jpg ...) (default : png)
-    @param mx : specify the MethodAnalysis object
-    @param raw : use directly a dot raw buffer if None
+    There are two possibilites to give input for this method:
+
+    1) use :code:`raw` argument and pass a dictionary containing the keys
+    :code:`name`, :code:`nodes` and :code:`edges`.
+    This can be created using :func:`method2dot`.
+    2) give a :class:`~androguard.core.analysis.analysis.MethodAnalysis`.
+
+    This function requires pydot!
+
+    There is a special format :code:`raw` which saves the dot buffer before it
+    is handled by pydot.
+
+    :param str output: output filename
+    :param str _format: format type (png, jpg ...). Can use all formats which are understood by pydot.
+    :param androguard.core.analysis.analysis.MethodAnalysis mx: specify the MethodAnalysis object
+    :param dict raw: use directly a dot raw buffer if None
     """
     # pydot is optional!
     import pydot
-
-    buff = "digraph {\n"
-    buff += "graph [rankdir=TB]\n"
-    buff += "node [shape=plaintext]\n"
 
     if raw:
         data = raw
     else:
         data = method2dot(mx)
 
-    # subgraphs cluster
-    buff += "subgraph cluster_{} ".format(hashlib.md5(bytearray(output, "UTF-8")).hexdigest())
-    buff += "{\n"
-    buff += "label=\"{}\"\n".format(data['name'])
-    buff += data['nodes']
-    buff += "}\n"
+    buff = """
+    digraph {{
+        graph [rankdir=TB]
+        node [shape=plaintext]
 
-    # subgraphs edges
-    buff += data['edges']
-    buff += "}\n"
+        subgraph cluster_{clustername}
+        {{
+            label="{classname}"
+            {nodes}
+        }}
 
-    d = pydot.graph_from_dot_data(buff)
-    if d:
+        {edges}
+    }}
+    """.format(clustername=hashlib.md5(output.encode("UTF-8")).hexdigest(),
+               classname=data['name'],
+               nodes=data['nodes'],
+               edges=data['edges'],
+               )
+
+    # NOTE: In certain cases the graph_from_dot_data function might fail.
+    # There is a bug in the code that certain html strings are interpreted as comment
+    # and therefore the dot buffer which is passed to graphviz is invalid.
+    # We can not really do anything here to prevent this (except for heavily
+    # escaping and replacing all characters).
+    # We hope, that this issue get's fixed in pydot, so we do not need to patch
+    # stuff here.
+    # In order to be able to debug the problems better, we will write the dot
+    # data here if the format `raw` is requested, instead of creating the graph
+    # and then writing the dot data.
+    # If you have problems with certain data, export it as dot and then run
+    # graphviz manually to see if the problem persists.
+    if _format == "raw":
+        with open(output, "w") as fp:
+            fp.write(buff)
+    else:
+        d = pydot.graph_from_dot_data(buff)
+        if len(d) > 1:
+            # Not sure what to do in this case?!
+            log.warnig("The graph generated for '{}' has too many subgraphs! "
+                       "Only plotting the first one.".format(output))
         for g in d:
             getattr(g, "write_" + _format.lower())(output)
+            break
 
 
 def method2png(output, mx, raw=False):
@@ -450,8 +530,7 @@ def vm2json(vm):
     return json.dumps(d)
 
 
-class TmpBlock(object):
-
+class TmpBlock:
     def __init__(self, name):
         self.name = name
 
@@ -555,12 +634,12 @@ def method2json_direct(mx):
             c_ins = {"idx": ins_idx,
                      "name": DVMBasicMethodBlockInstruction.get_name(),
                      "operands": DVMBasicMethodBlockInstruction.get_operands(ins_idx),
-                     "formatted_operands": DVMBasicMethodBlockInstruction.get_formatted_operands()}
+                     }
 
             cblock["instructions"].append(c_ins)
 
             if (DVMBasicMethodBlockInstruction.get_op_value() == 0x2b or
-                DVMBasicMethodBlockInstruction.get_op_value() == 0x2c):
+                    DVMBasicMethodBlockInstruction.get_op_value() == 0x2c):
                 values = DVMBasicMethodBlock.get_special_ins(ins_idx)
                 cblock["info_next"] = values.get_values()
 
@@ -573,7 +652,7 @@ def method2json_direct(mx):
                 cblock["info_bb"] = 1
 
             if (last_instru.get_op_value() == 0x2b or
-                last_instru.get_op_value() == 0x2c):
+                    last_instru.get_op_value() == 0x2c):
                 cblock["info_bb"] = 2
 
         cblock["Edge"] = []
@@ -598,60 +677,6 @@ def method2json_direct(mx):
     return json.dumps(d)
 
 
-class SV(object):
-
-    def __init__(self, size, buff):
-        self.__size = size
-        self.__value = unpack(self.__size, buff)[0]
-
-    def _get(self):
-        return pack(self.__size, self.__value)
-
-    def __str__(self):
-        return "0x%x" % self.__value
-
-    def __int__(self):
-        return self.__value
-
-    def get_value_buff(self):
-        return self._get()
-
-    def get_value(self):
-        return self.__value
-
-    def set_value(self, attr):
-        self.__value = attr
-
-
-class SVs(object):
-
-    def __init__(self, size, ntuple, buff):
-        self.__size = size
-
-        self.__value = ntuple._make(unpack(self.__size, buff))
-
-    def _get(self):
-        l = []
-        for i in self.__value._fields:
-            l.append(getattr(self.__value, i))
-        return pack(self.__size, *l)
-
-    def _export(self):
-        return [x for x in self.__value._fields]
-
-    def get_value_buff(self):
-        return self._get()
-
-    def get_value(self):
-        return self.__value
-
-    def set_value(self, attr):
-        self.__value = self.__value._replace(**attr)
-
-    def __str__(self):
-        return self.__value.__str__()
-
-
 def object_to_bytes(obj):
     """
     Convert a object to a bytearray or call get_raw() of the object
@@ -659,25 +684,19 @@ def object_to_bytes(obj):
     """
     if isinstance(obj, str):
         return bytearray(obj, "UTF-8")
-    elif isinstance(obj, bool):
+    if isinstance(obj, bool):
         return bytearray()
-    elif isinstance(obj, int):
+    if isinstance(obj, int):
         return pack("<L", obj)
-    elif obj is None:
+    if obj is None:
         return bytearray()
-    elif isinstance(obj, bytearray):
+    if isinstance(obj, bytearray):
         return obj
-    else:
-        return obj.get_raw()
+
+    return obj.get_raw()
 
 
-class MethodBC(object):
-
-    def show(self, value):
-        getattr(self, "show_" + value)()
-
-
-class BuffHandle(object):
+class BuffHandle:
     """
     BuffHandle is a wrapper around bytes.
     It gives the ability to jump in the byte stream, just like with BytesIO.
@@ -786,12 +805,12 @@ class BuffHandle(object):
         """
         Read all bytes from the start of `off` until the end of the buffer
 
+        This method can be used to determine a checksum of a buffer from a given
+        point on.
+
         :param int off: starting offset
         :rtype: bytearray
         """
-        if isinstance(off, SV):
-            off = off.value
-
         return self.__buff[off:]
 
     def read(self, size):
@@ -802,9 +821,6 @@ class BuffHandle(object):
         :param int size: length of bytes to read
         :rtype: bytearray
         """
-        if isinstance(size, SV):
-            size = size.value
-
         buff = self.__buff[self.__idx:self.__idx + size]
         self.__idx += size
 
@@ -846,7 +862,7 @@ class BuffHandle(object):
             fd.write(self.__buff)
 
 
-class Buff(object):
+class Buff:
     def __init__(self, offset, buff):
         self.offset = offset
         self.buff = buff
@@ -899,16 +915,30 @@ def get_package_class_name(name):
 
     If no package could be found, the package is an empty string.
 
+    If the name is an array type, the array is discarded.
+
     example::
 
         >>> get_package_class_name('Ljava/lang/Object;')
         ('java.lang', 'Object')
+        >>> get_package_class_name('[[Ljava/lang/Object;')
+        ('java.lang', 'Object')
+        >>> get_package_class_name('LSomeClass;')
+        ('', 'SomeClass')
 
     :param name: the name
     :rtype: tuple
     :return:
     """
-    if name[0] != 'L' and name[-1] != ';':
+    # name is MUTF8, so make sure we get the string variant
+    name = str(name)
+    if name[-1] != ';':
+        raise ValueError("The name '{}' does not look like a typed name!".format(name))
+
+    # discard array types, there might be many...
+    name = name.lstrip('[')
+
+    if name[0] != 'L':
         raise ValueError("The name '{}' does not look like a typed name!".format(name))
 
     name = name[1:-1]
@@ -966,9 +996,8 @@ def FormatDescriptorToPython(i):
     return i
 
 
-class Node(object):
+class Node:
     def __init__(self, n, s):
         self.id = n
         self.title = s
         self.children = []
-

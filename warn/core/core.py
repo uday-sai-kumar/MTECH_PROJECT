@@ -397,25 +397,50 @@ def get_constants_name_from_value(constant_dict, value) :
         log.error("The constant name corresponding to the value '%s' can not be found in the dictionary '%s'" % (value, constant_dict))
         return ERROR_CONSTANT_NAME_NOT_FOUND
 
-def data_flow_analysis(results, x) :
+def hello(results, x):
+    for result in results:
+        found_calls = result.get_xref_from()
+        for parent_class, parent_method, calling_offset in found_calls:
+            registers = backtrace_registers_before_call(x, parent_method.method, calling_offset)
+
+            class_str = "Class '%s'" % parent_class.orig_class.get_name()
+            method_str = "Method '%s'" % parent_method.method.get_name()
+            regs_str = "Register state before call %s" % registers
+
+            formatted_str = "{0:50}- {1:35}- {2:30}".format(class_str, method_str, regs_str)
+            print(formatted_str)
+            yield registers
+            # yield registers
+
+def data_flow_analysis(results, x):
     """
         @param tab : structural analysis results tab
         @param result : current iteration
         @param x : a Analysis instance
-    
+
         @rtype : an ordered list of dictionaries of each register content [{ 'register #': 'value' }, { 'register #': 'value' } ...]
+
     """
     for result in results:
         found_calls = result.get_xref_from()
-        
+        '''
+         gre_xref_from()
+         The list of tuples has the form:
+        (:class:`~ClassAnalysis`,
+        :class:`~androguard.core.bytecodes.dvm.EncodedMethod` or
+        :class:`~ExternalMethod`, :class:`int`)
+        '''
+
+
         for parent_class, parent_method, calling_offset in found_calls:
-            registers = backtrace_registers_before_call(x, parent_method, calling_offset)
-    
-            class_str   = "Class '%s'" % parent_class.orig_class.get_name()
-            method_str  = "Method '%s'" % parent_method.get_name()
-            regs_str    = "Register state before call %s" %  registers
-            
-            formatted_str = "{0:50}- {1:35}- {2:30}".format(class_str,method_str, regs_str)
-            
-            log.debug(formatted_str)
+           # print('type is ',type(parent_method))
+            registers = backtrace_registers_before_call(x, parent_method.method, calling_offset)
+
+            # class_str   = "Class '%s'" % parent_class.orig_class.get_name()
+            # method_str  = "Method '%s'" % parent_method.method.get_name()
+            # regs_str    = "Register state before call %s" %  registers
+            #
+            # formatted_str = "{0:50}- {1:35}- {2:30}".format(class_str, method_str, regs_str)
+            # print(formatted_str)
             yield registers
+            #yield registers
