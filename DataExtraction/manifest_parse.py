@@ -1,4 +1,3 @@
-from androguard.core.bytecodes.apk import *
 def parse_manifest(my_apk):
     intent_filters = set()
     activities = set(my_apk.get_receivers())

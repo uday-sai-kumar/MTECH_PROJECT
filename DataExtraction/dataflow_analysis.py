@@ -1,7 +1,6 @@
 from warn.core.core import *
 from androguard.misc import *
 
-
 def detect_connection(x):
     """
     :param x:  a VMAnalysis instance
@@ -207,7 +206,7 @@ def detect_data(x):
 
 def data_flow_result(dx):
 
-    #a, d, dx = AnalyzeAPK(x)
+    #a, d, dx = AnalyzeAPK(dx)
     a1 = detect_connection(dx)
     a2 = detect_content(dx)
     a3 = detect_file(dx)

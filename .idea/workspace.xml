@@ -1,28 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="369372fa-1b3b-4072-b26e-9411d1080383" name="Changes" comment="Sixth">
-      <change afterPath="$PROJECT_DIR$/DataExtraction/manifest_parse.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/DataExtraction/prepare_data.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/androguard/core/api_specific_resources/aosp_permissions/permissions_29.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/androguard/core/mutf8.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/androguard/core/resources/public.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/read_file_1.py" afterDir="false" />
+    <list default="true" id="369372fa-1b3b-4072-b26e-9411d1080383" name="Changes" comment="7">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DataExtraction/dataflow_analysis.py" beforeDir="false" afterPath="$PROJECT_DIR$/DataExtraction/dataflow_analysis.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/androguard/core/analysis/analysis.py" beforeDir="false" afterPath="$PROJECT_DIR$/androguard/core/analysis/analysis.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/androguard/core/analysis/auto.py" beforeDir="false" afterPath="$PROJECT_DIR$/androguard/core/analysis/auto.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/androguard/core/analysis/tags.py" beforeDir="false" afterPath="$PROJECT_DIR$/androguard/core/analysis/tags.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/androguard/core/androconf.py" beforeDir="false" afterPath="$PROJECT_DIR$/androguard/core/androconf.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/androguard/core/bytecode.py" beforeDir="false" afterPath="$PROJECT_DIR$/androguard/core/bytecode.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/androguard/core/bytecodes/apk.py" beforeDir="false" afterPath="$PROJECT_DIR$/androguard/core/bytecodes/apk.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DataExtraction/manifest_parse.py" beforeDir="false" afterPath="$PROJECT_DIR$/DataExtraction/manifest_parse.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DataExtraction/prepare_data.py" beforeDir="false" afterPath="$PROJECT_DIR$/DataExtraction/prepare_data.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/androguard/core/bytecodes/axml/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/androguard/core/bytecodes/axml/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/androguard/core/bytecodes/dvm.py" beforeDir="false" afterPath="$PROJECT_DIR$/androguard/core/bytecodes/dvm.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/androguard/core/bytecodes/dvm_types.py" beforeDir="false" afterPath="$PROJECT_DIR$/androguard/core/bytecodes/dvm_types.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dummy_work.py" beforeDir="false" afterPath="$PROJECT_DIR$/dummy_work.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/malware_main.py" beforeDir="false" afterPath="$PROJECT_DIR$/malware_main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/read_file.py" beforeDir="false" afterPath="$PROJECT_DIR$/read_file.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/warn/core/core.py" beforeDir="false" afterPath="$PROJECT_DIR$/warn/core/core.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -93,7 +80,7 @@
       <recent name="$PROJECT_DIR$/DataExtraction" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.prepare_data">
+  <component name="RunManager" selected="Python.malware_main">
     <configuration name="dataflow_analysis" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <log_file alias="HelloLog" path="$USER_HOME$/Desktop/log.txt" />
       <module name="CODE" />
@@ -158,6 +145,27 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="malware_main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="CODE" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/malware_main.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="manifest_parse" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="CODE" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -200,42 +208,21 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="sample_file" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="CODE" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/sample_file.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
     <list>
       <item itemvalue="Python.main" />
       <item itemvalue="Python.dataflow_analysis" />
       <item itemvalue="Python.dummy_work" />
-      <item itemvalue="Python.sample_file" />
       <item itemvalue="Python.manifest_parse" />
       <item itemvalue="Python.prepare_data" />
+      <item itemvalue="Python.malware_main" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.malware_main" />
+        <item itemvalue="Python.dummy_work" />
         <item itemvalue="Python.prepare_data" />
         <item itemvalue="Python.dataflow_analysis" />
         <item itemvalue="Python.manifest_parse" />
-        <item itemvalue="Python.dummy_work" />
-        <item itemvalue="Python.sample_file" />
       </list>
     </recent_temporary>
   </component>
@@ -318,7 +305,14 @@
       <option name="project" value="LOCAL" />
       <updated>1651212465937</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="7">
+      <created>1651823661771</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1651823661771</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -339,6 +333,7 @@
     <MESSAGE value="Fourth" />
     <MESSAGE value="Fifth" />
     <MESSAGE value="Sixth" />
-    <option name="LAST_COMMIT_MESSAGE" value="Sixth" />
+    <MESSAGE value="7" />
+    <option name="LAST_COMMIT_MESSAGE" value="7" />
   </component>
 </project>

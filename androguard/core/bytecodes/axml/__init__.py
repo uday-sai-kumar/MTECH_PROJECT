@@ -258,7 +258,7 @@ class StringBlock:
         encoded_bytes = str_len * 2
 
         data = self.m_charbuff[offset: offset + encoded_bytes]
-
+        #print(data)
         if self.m_charbuff[offset + encoded_bytes:offset + encoded_bytes + 2] != b"\x00\x00":
             raise ResParserError("UTF-16 String is not null terminated! At offset={}".format(offset))
 
