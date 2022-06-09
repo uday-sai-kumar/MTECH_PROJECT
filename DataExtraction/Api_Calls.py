@@ -13,7 +13,7 @@ def get_api_calls(path):
             a = '%s' % method.get_class_name()
             b = '%s' % method.get_name()
             c = '%s' % method.get_descriptor() #(function arguments) return_type
-            print(a +' ---- '+ b +' --- ' + c)
+            #print(a +' ---- '+ b +' --- ' + c)
 
             # methods.append(a.rstrip(';') + '.' + b + c)
 

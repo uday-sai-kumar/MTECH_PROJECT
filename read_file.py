@@ -1,19 +1,19 @@
 
 import io
 
-feature_sets = {
-    "feature": 1,
-    "permission": 2,
-    "activity": 3,
-    "service_receiver": 3,
-    "provider": 3,
-    "service": 3,
-    "intent": 4,
-    "api_call": 5,
-    "real_permission": 6,
-    "call": 7,
-    "url": 8
-}
+# feature_sets = {
+#     "feature": 1,
+#     "permission": 2,
+#     "activity": 3,
+#     "service_receiver": 3,
+#     "provider": 3,
+#     "service": 3,
+#     "intent": 4,
+#     "api_call": 5,
+#     "real_permission": 6,
+#     "call": 7,
+#     "url": 8
+# }
 #
 #
 # class ReadFile:
@@ -32,19 +32,19 @@ feature_sets = {
 #
 #
 
-# feature_sets = {
-#     "activity": 1,
-#     "permission": 2,
-#     "receiver": 3,
-#     "service": 4,
-#     "provider": 5,
-#     "intent_filter": 6,
-#     "api_connection": 7,
-#     "api_content": 8,
-#     "api_file": 9,
-#     "api_intent": 10,
-#     "api_data": 11
-# }
+feature_sets = {
+    "activity": 1,
+    "permission": 2,
+    "receiver": 3,
+    "service": 4,
+    "provider": 5,
+    "intent_filter": 6,
+    "api_connection": 7,
+    "api_content": 8,
+    "api_file": 9,
+    "api_intent": 10,
+    "api_data": 11
+}
 
 
 class ReadFile:

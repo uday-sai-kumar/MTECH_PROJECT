@@ -8,5 +8,15 @@ import pyarrow.feather as feather
 # data_frame.fillna(0, inplace=True)
 # data_frame.loc[1,'a'] = 4344
 # feather.write_feather(data_frame,"/Users/udaysaikumar/Documents/THESIS/CODES/DATASET/feather_file/hello")
-df = feather.read_feather("/Users/udaysaikumar/Documents/THESIS/CODES/DATASET/feather_file/hello")
-print(df)
+# df = feather.read_feather("/Users/udaysaikumar/Documents/THESIS/CODES/DATASET/feather_file/hello")
+# print(df)
+
+import pandas as pd
+
+df = pd.read_csv('/Users/udaysaikumar/Desktop/latest.csv')
+df = df.drop(columns=['column_nameA', 'column_nameB'])
+frame = df[df['vt_detection'] == 0 ]
+
+
+
+

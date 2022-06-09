@@ -24,7 +24,7 @@ def detect_connection(x):
             #print('hi')
             #print(type(_registers))
             if len(_registers) >= 2:
-                print(_registers)
+                #print(_registers)
                 remote_address = get_register_value(1, _registers)
                 remote_port = get_register_value(2, _registers)
                 local_formatted_str.append("remote address '%s' on the '%s' port " % (remote_address, remote_port))
