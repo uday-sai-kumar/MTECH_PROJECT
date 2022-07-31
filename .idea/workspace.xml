@@ -1,111 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="369372fa-1b3b-4072-b26e-9411d1080383" name="Changes" comment="8">
-      <change afterPath="$PROJECT_DIR$/androguard_new/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/androguard_new/cli/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/androguard_new/cli/entry_points.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/androguard_new/cli/main.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/androguard_new/core/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/androguard_new/core/analysis/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/androguard_new/core/analysis/analysis.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/androguard_new/core/analysis/auto.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/androguard_new/core/analysis/tags.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/androguard_new/core/androconf.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/androguard_new/core/api_specific_resources/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/androguard_new/core/api_specific_resources/aosp_permissions/permissions_10.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/androguard_new/core/api_specific_resources/aosp_permissions/permissions_13.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/androguard_new/core/api_specific_resources/aosp_permissions/permissions_14.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/androguard_new/core/api_specific_resources/aosp_permissions/permissions_15.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/androguard_new/core/api_specific_resources/aosp_permissions/permissions_16.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/androguard_new/core/api_specific_resources/aosp_permissions/permissions_17.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/androguard_new/core/api_specific_resources/aosp_permissions/permissions_18.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/androguard_new/core/api_specific_resources/aosp_permissions/permissions_19.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/androguard_new/core/api_specific_resources/aosp_permissions/permissions_21.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/androguard_new/core/api_specific_resources/aosp_permissions/permissions_22.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/androguard_new/core/api_specific_resources/aosp_permissions/permissions_23.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/androguard_new/core/api_specific_resources/aosp_permissions/permissions_24.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/androguard_new/core/api_specific_resources/aosp_permissions/permissions_25.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/androguard_new/core/api_specific_resources/aosp_permissions/permissions_26.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/androguard_new/core/api_specific_resources/aosp_permissions/permissions_27.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/androguard_new/core/api_specific_resources/aosp_permissions/permissions_28.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/androguard_new/core/api_specific_resources/aosp_permissions/permissions_4.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/androguard_new/core/api_specific_resources/aosp_permissions/permissions_5.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/androguard_new/core/api_specific_resources/aosp_permissions/permissions_6.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/androguard_new/core/api_specific_resources/aosp_permissions/permissions_7.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/androguard_new/core/api_specific_resources/aosp_permissions/permissions_8.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/androguard_new/core/api_specific_resources/aosp_permissions/permissions_9.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/androguard_new/core/api_specific_resources/api_permission_mappings/permissions_16.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/androguard_new/core/api_specific_resources/api_permission_mappings/permissions_17.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/androguard_new/core/api_specific_resources/api_permission_mappings/permissions_18.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/androguard_new/core/api_specific_resources/api_permission_mappings/permissions_19.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/androguard_new/core/api_specific_resources/api_permission_mappings/permissions_21.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/androguard_new/core/api_specific_resources/api_permission_mappings/permissions_22.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/androguard_new/core/api_specific_resources/api_permission_mappings/permissions_23.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/androguard_new/core/api_specific_resources/api_permission_mappings/permissions_24.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/androguard_new/core/api_specific_resources/api_permission_mappings/permissions_25.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/androguard_new/core/bytecode.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/androguard_new/core/bytecodes/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/androguard_new/core/bytecodes/apk.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/androguard_new/core/bytecodes/axml/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/androguard_new/core/bytecodes/axml/types.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/androguard_new/core/bytecodes/dvm.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/androguard_new/core/bytecodes/dvm_types.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/androguard_new/core/mutf8.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/androguard_new/core/resources/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/androguard_new/core/resources/public.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/androguard_new/core/resources/public.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/androguard_new/core/resources/public.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/androguard_new/decompiler/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/androguard_new/decompiler/dad/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/androguard_new/decompiler/dad/basic_blocks.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/androguard_new/decompiler/dad/control_flow.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/androguard_new/decompiler/dad/dast.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/androguard_new/decompiler/dad/dataflow.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/androguard_new/decompiler/dad/decompile.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/androguard_new/decompiler/dad/graph.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/androguard_new/decompiler/dad/instruction.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/androguard_new/decompiler/dad/node.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/androguard_new/decompiler/dad/opcode_ins.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/androguard_new/decompiler/dad/util.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/androguard_new/decompiler/dad/writer.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/androguard_new/decompiler/decompiler.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/androguard_new/gui/Banners.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/androguard_new/gui/BinViewMode.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/androguard_new/gui/DataModel.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/androguard_new/gui/DisasmViewMode.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/androguard_new/gui/HexViewMode.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/androguard_new/gui/SourceViewMode.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/androguard_new/gui/TextDecorators.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/androguard_new/gui/TextSelection.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/androguard_new/gui/ViewMode.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/androguard_new/gui/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/androguard_new/gui/androguard.ico" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/androguard_new/gui/annotation.ui" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/androguard_new/gui/apiwindow.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/androguard_new/gui/binwindow.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/androguard_new/gui/cemu.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/androguard_new/gui/fileloading.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/androguard_new/gui/helpers.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/androguard_new/gui/mainwindow.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/androguard_new/gui/methodswindow.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/androguard_new/gui/renamewindow.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/androguard_new/gui/resourceswindow.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/androguard_new/gui/search.ui" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/androguard_new/gui/sourcewindow.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/androguard_new/gui/stringswindow.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/androguard_new/gui/treewindow.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/androguard_new/gui/xrefwindow.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/androguard_new/misc.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/androguard_new/session.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/androguard_new/util.py" afterDir="false" />
+    <list default="true" id="369372fa-1b3b-4072-b26e-9411d1080383" name="Changes" comment="9">
+      <change afterPath="$PROJECT_DIR$/DataVisualization/pca_visualization.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/EnsembleTechniques/ensemble.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DataExtraction/Api_Calls.py" beforeDir="false" afterPath="$PROJECT_DIR$/DataExtraction/Api_Calls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DataExtraction/dataflow_analysis.py" beforeDir="false" afterPath="$PROJECT_DIR$/DataExtraction/dataflow_analysis.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DataExtraction/prepare_data.py" beforeDir="false" afterPath="$PROJECT_DIR$/DataExtraction/prepare_data.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dummy_work.py" beforeDir="false" afterPath="$PROJECT_DIR$/dummy_work.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/malware_main.py" beforeDir="false" afterPath="$PROJECT_DIR$/malware_main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/read_file.py" beforeDir="false" afterPath="$PROJECT_DIR$/read_file.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -129,17 +30,6 @@
       <filtered-out-file-type name="TAG" />
       <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
     </file-type-list>
-  </component>
-  <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/_feature_vectors.csv" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/dummy_work.py" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/malware_main.py" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/feature_selection.py" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/main.py" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/DataExtraction/Api_Calls.py" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/create_data_frame.py" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/DataExtraction/__init__.py" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/train_data.py" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="LogFilters">
     <option name="FILTER_ERRORS" value="false" />
@@ -176,7 +66,7 @@
       <recent name="$PROJECT_DIR$/DataExtraction" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.prepare_data">
+  <component name="RunManager" selected="Python.malware_main">
     <configuration name="dataflow_analysis" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <log_file alias="HelloLog" path="$USER_HOME$/Desktop/log.txt" />
       <module name="CODE" />
@@ -314,8 +204,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.prepare_data" />
         <item itemvalue="Python.malware_main" />
+        <item itemvalue="Python.prepare_data" />
         <item itemvalue="Python.dummy_work" />
         <item itemvalue="Python.dataflow_analysis" />
         <item itemvalue="Python.manifest_parse" />
@@ -415,7 +305,14 @@
       <option name="project" value="LOCAL" />
       <updated>1653377378130</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="9">
+      <created>1654746550368</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1654746550368</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -438,6 +335,7 @@
     <MESSAGE value="Sixth" />
     <MESSAGE value="7" />
     <MESSAGE value="8" />
-    <option name="LAST_COMMIT_MESSAGE" value="8" />
+    <MESSAGE value="9" />
+    <option name="LAST_COMMIT_MESSAGE" value="9" />
   </component>
 </project>
